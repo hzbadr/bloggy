@@ -1,0 +1,6 @@
+1- mix phx.new bloggy
+2- install coherence
+  mix coh.install --full
+3- mix phx.gen.html Content Article articles title content:text author:references:users view_count:integer
+  check migration
+4- 
