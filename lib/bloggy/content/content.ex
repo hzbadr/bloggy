@@ -101,4 +101,13 @@ defmodule Bloggy.Content do
   def change_article(%Article{} = article) do
     Article.changeset(article, %{})
   end
+
+  @doc """
+  
+  """
+  def increment_view_count(%Article{} = article) do
+    article
+    |> Article.changeset(%{view_count: article.view_count+1})
+    |> Repo.update
+  end
 end

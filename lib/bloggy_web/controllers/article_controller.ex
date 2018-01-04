@@ -27,6 +27,7 @@ defmodule BloggyWeb.ArticleController do
 
   def show(conn, %{"id" => id}) do
     article = Content.get_article!(id)
+    {:ok, article} = Content.increment_view_count(article)
     render(conn, "show.html", article: article)
   end
 
