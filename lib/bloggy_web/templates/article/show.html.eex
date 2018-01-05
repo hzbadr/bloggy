@@ -21,8 +21,14 @@
 
 <strong><%= @article.author_id %></strong>
 
-<%= if @current_user do %>
-  <span><%= button("Follow", to: follower_path(@conn, :create, [follower_id: @current_user.id, followee_id: @article.author_id]), method: :post) %></span>
+<%= if @current_user.id == @article.author_id do %>
+  That's you!
+<% else %>
+  <%= if Bloggy.Content.followers?(@current_user.id, @article.author_id) do %>
+    <span><%= button("Unfollow", to: follower_path(@conn, :delete, @article.author_id), method: :delete) %></span>
+  <% else %>
+    <span><%= button("Follow", to: follower_path(@conn, :create, [follower_id: @current_user.id, followee_id: @article.author_id]), method: :post) %></span>
+  <% end %>
 <% end %>
 <span><%= link "Edit", to: article_path(@conn, :edit, @article) %></span>
 <span><%= link "Back", to: article_path(@conn, :index) %></span>

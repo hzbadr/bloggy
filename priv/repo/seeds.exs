@@ -6,10 +6,13 @@ Bloggy.Repo.delete_all User
 Bloggy.Repo.delete_all Article
 Bloggy.Repo.delete_all ArticleUserLike
 
-user1 = User.changeset(%User{}, %{name: "Test User", email: "testuser@example.com", password: "1234", password_confirmation: "1234"})
+user1 = User.changeset(%User{}, %{name: "User 1", email: "testuser@example.com", password: "1234", password_confirmation: "1234"})
 |> Bloggy.Repo.insert!
 
-user2 = User.changeset(%User{}, %{name: "Test User", email: "h@h.com", password: "1234", password_confirmation: "1234"})
+user2 = User.changeset(%User{}, %{name: "User 2", email: "h@h.com", password: "1234", password_confirmation: "1234"})
+|> Bloggy.Repo.insert!
+
+user3 = User.changeset(%User{}, %{name: "User 3", email: "h1@h.com", password: "1234", password_confirmation: "1234"})
 |> Bloggy.Repo.insert!
 
 a1 = Article.changeset(%Article{}, %{title: "Hello 1", content: "Content 1", author_id: user1.id})

@@ -17,12 +17,11 @@ defmodule BloggyWeb.FollowerController do
     redirect(conn, to: article_path(conn, :index))
   end
   
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"id" => user_id}) do
     current_user = Coherence.current_user(conn)
-    with followship = Repo.get!(Follower, id),
-      Repo.delete!(followship) do
-      redirect(conn, to: article_path(conn, :index))
-    end
+    Bloggy.Content.followers?(current_user.id, user_id)
+    |> Repo.delete! 
+    redirect(conn, to: article_path(conn, :index))
   end
   
 end

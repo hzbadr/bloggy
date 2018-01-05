@@ -8,6 +8,7 @@ defmodule Bloggy.Content do
 
   alias Bloggy.Content.Article
   alias Bloggy.ArticleUserLike
+  alias Bloggy.Follower
 
   @doc """
   Returns the list of articles.
@@ -131,6 +132,14 @@ defmodule Bloggy.Content do
   
   def article_likes_count(article_id) do
     query = from like in ArticleUserLike, select: count(like.id), where: like.article_id == ^article_id
-    Repo.one(query)
+    Repo.get!(query)
+  end
+
+  def followers?(user_1, user_2) do
+    query = from f in Follower, 
+            select: %Follower{id: f.id},
+            where: (f.follower_id == ^user_1 and f.followee_id == ^user_2) or 
+                   (f.follower_id == ^user_2 and f.followee_id == ^user_1)
+    IO.inspect Repo.one(query)
   end
 end
