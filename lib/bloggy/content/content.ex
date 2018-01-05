@@ -7,6 +7,7 @@ defmodule Bloggy.Content do
   alias Bloggy.Repo
 
   alias Bloggy.Content.Article
+  alias Bloggy.ArticleUserLike
 
   @doc """
   Returns the list of articles.
@@ -109,5 +110,15 @@ defmodule Bloggy.Content do
     article
     |> Article.changeset(%{view_count: article.view_count+1})
     |> Repo.update
+  end
+
+  def user_liked_article?(user_id, article_id) do
+    ArticleUserLike
+    |> Repo.get_by %{user_id: user_id, article_id: article_id}
+  end
+  
+  def article_likes_count(article_id) do
+    query = from like in ArticleUserLike, select: count(like.id), where: like.article_id == ^article_id
+    Repo.one(query)
   end
 end

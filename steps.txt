@@ -3,4 +3,5 @@
   mix coh.install --full
 3- mix phx.gen.html Content Article articles title content:text author:references:users view_count:integer
   check migration
-4- 
+4- Add code
+5- mix phx.gen.schema Favourite ArticleUserLike article_user_likes article:references:articles user:references:users

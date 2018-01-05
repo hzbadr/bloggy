@@ -18,7 +18,7 @@ defmodule BloggyWeb.Router do
 
   scope "/" do
     pipe_through :browser
-    coherence_routes
+    coherence_routes()
     coherence_routes :protected
   end
 
@@ -28,6 +28,7 @@ defmodule BloggyWeb.Router do
     get "/", PageController, :index
 
     resources "/articles", ArticleController
+    resources "/likes", LikeController, only: [:create, :delete]
   end
 
   # Other scopes may use custom stacks.
