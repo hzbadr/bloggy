@@ -1,0 +1,18 @@
+<h2>Listing Follower</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>A</th>
+      <th>B</th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for follower <- @followers do %>
+    <tr>
+      <td><%= follower.follower.email %></td>
+      <td><%= follower.followee.email %></td>
+    </tr>
+<% end %>
+  </tbody>
+</table>

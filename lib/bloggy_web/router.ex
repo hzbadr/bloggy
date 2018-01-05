@@ -29,6 +29,7 @@ defmodule BloggyWeb.Router do
 
     resources "/articles", ArticleController
     resources "/likes", LikeController, only: [:create, :delete]
+    resources "/followers", FollowerController, only: [:index, :create, :delete]
   end
 
   # Other scopes may use custom stacks.

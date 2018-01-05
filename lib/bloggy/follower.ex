@@ -5,9 +5,11 @@ defmodule Bloggy.Follower do
 
 
   schema "followers" do
-    field :follower_id, :id
-    field :followee_id, :id
+    #field :follower_id, :id
+    #field :followee_id, :id
 
+    belongs_to :follower, Bloggy.Coherence.User
+    belongs_to :followee, Bloggy.Coherence.User
     timestamps()
   end
 
