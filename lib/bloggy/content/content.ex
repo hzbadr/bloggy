@@ -112,9 +112,21 @@ defmodule Bloggy.Content do
     |> Repo.update
   end
 
+  def list_articles_with_likes(user_id) do
+    query = from article in "articles",
+            left_join: like in ArticleUserLike, on: [article_id: article.id], 
+            select: %{id: article.id, title: article.title, 
+                      content: article.content, author_id: article.author_id, 
+                      view_count: article.view_count, likes: count(like.id)},
+            group_by: [article.id],
+            order_by: [article.id]
+
+    IO.inspect Repo.all query
+  end
+
   def user_liked_article?(user_id, article_id) do
     ArticleUserLike
-    |> Repo.get_by %{user_id: user_id, article_id: article_id}
+    |> Repo.get_by(%{user_id: user_id, article_id: article_id})
   end
   
   def article_likes_count(article_id) do

@@ -18,7 +18,7 @@ defmodule Bloggy.Content.Article do
   @doc false
   def changeset(%Article{} = article, attrs) do
     article
-    |> cast(attrs, [:title, :content, :view_count])
+    |> cast(attrs, [:title, :content, :view_count, :author_id])
     |> validate_required([:title, :content])
   end
 end

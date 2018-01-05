@@ -15,6 +15,8 @@ defmodule BloggyWeb.ArticleController do
   end
 
   def create(conn, %{"article" => article_params}) do
+    current_user = current_user = Coherence.current_user(conn)
+    article_params = Map.put(article_params, :author_id, current_user.id)
     case Content.create_article(article_params) do
       {:ok, article} ->
         conn

@@ -2,35 +2,41 @@
 
 <%= for article <- @articles do %>
 <div class="article">
-  <h3><%= article.title %></h3>
-  <p>
-    <%= article.content %>
-  </p>
   <ul>
     <li><%= "#{article.view_count} Views"%> </li>
     
     <%= if @current_user do %>
       <li>
-        <%= Bloggy.Content.article_likes_count(article.id) %>
-
-        <%= if Bloggy.Content.user_liked_article?(@current_user.id, article.id) do %>
-          <li><%= button("Remove Like", to: like_path(@conn, :delete, article), method: :delete) %></li>
-        <% else %>
-          <li><%= button("Like", to: like_path(@conn, :create, [user_id: @current_user.id, article_id: article.id]), method: :post) %></li>
-        <% end %>
+        <%= article.likes  %>
+        Likes
       </li>
+      <%= if Bloggy.Content.user_liked_article?(@current_user.id, article.id) do %>
+        <li><%= button("Remove Like", to: like_path(@conn, :delete, article.id), method: :delete) %></li>
+      <% else %>
+        <li><%= button("Like", to: like_path(@conn, :create, [user_id: @current_user.id, article_id: article.id]), method: :post) %></li>
+      <% end %>
     <% end %>
-
-    <li><%= link "More...", to: article_path @conn, :show, article %></li>
+    <li><%= link "More...", to: article_path @conn, :show, article.id %></li>
   </ul>
+  <h3><%= article.title %></h3>
+  <p>
+    <%= article.content %>
+  </p>
 </div>
 <% end %>
 
 <style>
+.article{
+  border-style: solid;
+  border-width: 1px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 .article ul {
   float: right;
   list-style-type: none;
-}
+  margin: 5px;
+ }
 .article ul li {
   float: left;
   display: block;
