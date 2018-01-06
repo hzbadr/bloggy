@@ -4,8 +4,12 @@ defmodule BloggyWeb.ArticleController do
   alias Bloggy.Content
   alias Bloggy.Content.Article
 
-  def index(conn, _params) do
-    articles = Content.list_articles()
+  def index(conn, params) do
+    articles = with %{"author_id" => author_id} <- params do
+      Content.list_articles(%{author_id: author_id})
+    else
+      err ->  Content.list_articles()
+    end
     render(conn, "index.html", articles: articles)
   end
 
@@ -15,8 +19,9 @@ defmodule BloggyWeb.ArticleController do
   end
 
   def create(conn, %{"article" => article_params}) do
-    current_user = current_user = Coherence.current_user(conn)
+    current_user = Coherence.current_user(conn)
     article_params = Map.put(article_params, :author_id, current_user.id)
+
     case Content.create_article(article_params) do
       {:ok, article} ->
         conn

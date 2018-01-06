@@ -19,7 +19,12 @@ defmodule Bloggy.Content do
       [%Article{}, ...]
 
   """
-  def list_articles do
+  def list_articles(%{author_id: author_id}) do
+    query = from article in Article, where: article.author_id == ^author_id
+    Repo.all(query)
+  end
+
+  def list_articles() do
     Repo.all(Article)
   end
 
